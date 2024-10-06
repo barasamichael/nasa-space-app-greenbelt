@@ -3,87 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <title>Plant Information for Farmers</title>
+    <title>For the Lorax</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f5f5f5;
-        }
-        .card {
-            margin: 20px;
-            border: none;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        .card img {
-            max-width: 100%;
-            height: auto;
-        }
-        .card-title {
-            font-size: 1.5rem;
-            color: #2c3e50;
-        }
-        .card-text {
-            color: #7f8c8d;
-        }
-    </style>
-</head>
-<body>
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .space-y-16 > div {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+    .space-y-16 > div:nth-child(1) { animation-delay: 0.2s; }
+    .space-y-16 > div:nth-child(2) { animation-delay: 0.4s; }
+    .space-y-16 > div:nth-child(3) { animation-delay: 0.6s; }
+</style>
 
-    <div class="container">
-        <h1 class="text-center mt-5">Plants Suitable for Farmers</h1>
-        <div class="row justify-content-center" id="plant-data">
-            <!-- Plant cards will be inserted here -->
+     
+</head>
+<body class="bg-green-50">
+    <header class="fixed w-full z-20 transition-all duration-300" id="header">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-3xl font-bold text-white">For the Lorax</h1>
+                <nav>
+                    <a href="#hero" class="mr-9 hover:underline text-black text-xl">Let it Grow</a>
+                    <a href="#impact" class="hover:underline text-black text-xl">Impact</a>                
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="h-screen flex flex-col md:flex-row">
+    <div class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center relative" style="background-image: url('/static/img/deforestation.jpg');">
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center relative" style="background-image: url('/static/img/affo.jpg');">
+    </div>
+    <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center text-white p-10">
+                <h2 class="text-8xl font-bold mb-4" style="margin-left: -90px;">Let it</h2>
+                <h2 class="text-9xl mb-6 font-Poppins text-green-600" style="margin-left: 150px;">Grow.</h2>
+                <p class=" text-5xl text-white font-bold py-2 px-4 mt-9" style="margin-left: 750px;">-the Lorax</p>
+            </div>
+    </div> 
+</section>
+        
     
-    <script>
-        async function fetchPlantData() {
-            try {
-                const response = await fetch("http://127.0.0.1:5000/api/plants?climate_zone=temperate&latitude=34.0522&longitude=-118.2437");
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
 
-                const data = await response.json();
-                displayPlants(data.data);
-            } catch (error) {
-                console.error('Error fetching plant data:', error);
+
+<section id="impact" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-8 text-center text-green-800">The Story of Our Forests: A Call to Action</h2>
+        
+        <!-- Introduction -->
+        <div class="mb-12 text-center">
+            <p class="text-xl text-gray-700">Our forests are the lungs of our planet, home to countless species, and key to our survival. But they're disappearing at an alarming rate. Let's explore the impact and how we can make a difference.</p>
+        </div>
+        
+        <!-- Story Timeline -->
+        <div class="space-y-16">
+            <!-- Climate Change -->
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 p-4">
+                    <img src="/static/img/forestfire.jpg" alt="Deforestation and Climate Change" class="w-full h-auto rounded-lg shadow-lg object-cover">
+                </div>
+                <div class="w-full md:w-1/2 p-4">
+                    <h3 class="text-2xl font-semibold mb-4 text-green-700">The Heated Debate: Climate Change</h3>
+                    <p class="mb-4">As our forests diminish, so does Earth's natural defense against climate change. Trees absorb CO2, but when they're cut down, that carbon is released back into the atmosphere.</p>
+                    <ul class="list-disc list-inside mb-4 text-gray-700">
+                        <li>Deforestation accounts for about 15% of all greenhouse gas emissions</li>
+                        <li>A single tree can absorb up to 48 pounds of CO2 per year</li>
+                    </ul>
+                    <a href="#" class="inline-block bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition duration-300">Learn More About Forest Carbon</a>
+                </div>
+            </div>
+            
+            <!-- Biodiversity Loss -->
+            <div class="flex flex-col md:flex-row-reverse items-center">
+                <div class="w-full md:w-1/2 p-4">
+                    <img src="/static/img/nature.jpg" alt="Biodiversity Loss" class="w-full h-auto rounded-lg shadow-lg object-cover">
+                </div>
+                <div class="w-full md:w-1/2 p-4">
+                    <h3 class="text-2xl font-semibold mb-4 text-green-700">The Silent Extinction: Biodiversity Loss</h3>
+                    <p class="mb-4">Forests are teeming with life, hosting 80% of the world's terrestrial biodiversity. As we lose forests, we lose entire species - many before they're even discovered.</p>
+                    <ul class="list-disc list-inside mb-4 text-gray-700">
+                        <li>Up to 28,000 species may go extinct in the next quarter century due to deforestation</li>
+                        <li>Tropical rainforests, covering just 6% of Earth's surface, are home to over half of the world's plant and animal species</li>
+                    </ul>
+                    <a href="#" class="inline-block bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition duration-300">Explore Biodiversity Hotspots</a>
+                </div>
+            </div>
+            
+            <!-- Call to Action -->
+            
+        </div>
+    </div>
+</section>
+<div class="bg-green-600 text-white px-8 py-10 shadow-xl">
+                <h3 class="text-3xl font-bold mb-4 text-center">Your Chapter in This Story</h3>
+                <p class="text-xl mb-6 text-center">Every action, no matter how small, writes a new page in the story of our forests. What will your contribution be?</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    
+                    <a href="#" class="bg-white text-green-700 font-bold py-2 px-4 rounded hover:bg-gray-100 transition duration-300">Plant a Tree</a>
+                    
+                </div>
+            </div>
+
+<section id="about" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-8 text-center">Message from our Sponsors...</h2>
+        <div class="space-y-12">
+            <!-- Wangari Maathai Section -->
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 p-4">
+                    <img src="/static/img/wangari.jpg" alt="Wangari Maathai" class="w-full h-auto rounded-lg shadow-lg"/>
+
+                </div>
+                <div class="w-full md:w-1/2 p-4">
+                    <h3 class="text-2xl font-semibold mb-4">Wangari Maathai</h3>
+
+                    <p class="mb-4">Wangari Maathai, the ultimate goat of environmental conservation, founded the Green Belt Movement and became the first African woman to receive the Nobel Peace Prize for her contribution to sustainable development, democracy, and peace.</p>
+                    <blockquote class="italic text-green-700 border-l-4 border-green-500 pl-4 mb-6">"The little grassroots people can change this world."</blockquote>
+                    
+                </div>
+                <div class="w-full md:w-1/2 p-4">
+                    <img src="/static/img/lorax.jpg" alt="The Lorax" class="w-full h-auto rounded-lg shadow-lg"/>
+                </div>
+                <div class="w-full md:w-1/2 p-4">
+                    
+                    <h3 class="text-2xl font-semibold mb-4">The Lorax</h3>
+                    <p class="mb-4">The Lorax, a character created by Dr. Seuss, speaks for the trees and teaches us about the importance of environmental stewardship and the consequences of unchecked industrialization.</p>
+                    <blockquote class="italic text-green-700 border-l-4 border-green-500 pl-4 mb-6">"Unless someone like you cares a whole awful lot, nothing is going to get better. It's not."</blockquote>
+                </div>
+            </div>
+            
+           
+           
+    </div>
+</section>
+
+    </main>
+
+    <footer class="bg-green-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Forest Guardian. Inspired by Wangari Maathai and the Lorax.</p>
+            <p class="mt-2">Together, we can make a difference. Plant a tree today!</p>
+        </div>
+    </footer>
+<script>
+        window.addEventListener('scroll', function() {
+            var header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-green-400', 'bg-opacity-90', 'bg-blur');
+            } else {
+                header.classList.remove('bg-green-400', 'bg-opacity-90', 'bg-blur');
             }
-        }
-
-        function displayPlants(plants) {
-            const plantDataContainer = document.getElementById('plant-data');
-            plantDataContainer.innerHTML = ''; // Clear existing data
-
-            plants.forEach(plant => {
-                const imageUrl = plant.image_url || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWQwE9uVmHAYj0cF7B0tg9140LPsKCEh4GpA&s'; // Placeholder image
-                const plantCard = `
-                    <div class="col-md-4">
-                        <div class="card">
-      <img src="${imageUrl}" class="card-img-top" alt="${plant.common_name}" onerror="this.onerror=null; this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWQwE9uVmHAYj0cF7B0tg9140LPsKCEh4GpA&s'">
-                            <div class="card-body">
-                                <h5 class="card-title">${plant.common_name}</h5>
-                                <p class="card-text"><strong>Scientific Name:</strong> ${plant.scientific_name}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                plantDataContainer.innerHTML += plantCard; // Append new card
-            });
-        }
-
-        // Call the function on page load
-        fetchPlantData();
+        });
     </script>
 </body>
-</html>
 
+</html>
