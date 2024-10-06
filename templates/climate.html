@@ -6,6 +6,8 @@
     <title>Restoring Kitengela: Reforestation Story</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.1/dist/chartjs-plugin-zoom.min.js"></script>
     <link href="/static/css/styles.css" rel="stylesheet">
   </head>
   <body>
@@ -87,6 +89,31 @@
           </div>
         </div>
 
+        <div class="container mb-5">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card custom-card pt-3">
+                <div class="card-body">
+                  <h3 class="text-center mb-4 custom-heading">Climate Data Comparison (Rainfall & Temperature)</h3>
+                  <div class="text-center">
+                    <button class="year-toggle" data-year="2023" onclick="toggleYear('2023')">2023</button>
+                    <button class="year-toggle" data-year="2022" onclick="toggleYear('2022')">2022</button>
+                    <button class="year-toggle" data-year="2021" onclick="toggleYear('2021')">2021</button>
+                    <button class="year-toggle" data-year="2020" onclick="toggleYear('2020')">2020</button>
+                    <button class="year-toggle" data-year="2019" onclick="toggleYear('2019')">2019</button>
+                  </div>
+                  <div class="chart-wrapper d-flex">
+                    <div class="chart-container">
+                      <canvas id="climateChart"></canvas>
+                    </div>
+                    <div id="legend" class="legend-container ml-3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <h3 class="text-center mb-4 custom-heading">Weather Data Overview</h3>
         <div class="table-responsive">
           <table class="table table-bordered table-custom">
@@ -102,37 +129,7 @@
                 <th><i class="fas fa-arrow-down"></i> Lowest Monthly Temperature</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>2020</td>
-                <td class="rain-cell">1200</td>
-                <td class="temp-cell">18</td>
-                <td class="rating-moderate">Moderate</td>
-                <td>June (200mm)</td>
-                <td>August (30°C)</td>
-                <td>February (50mm)</td>
-                <td>December (5°C)</td>
-              </tr>
-              <tr>
-                <td>2021</td>
-                <td class="rain-cell">800</td>
-                <td class="temp-cell">22</td>
-                <td class="rating-low">Low</td>
-                <td>March (150mm)</td>
-                <td>July (35°C)</td>
-                <td>December (20mm)</td>
-                <td>January (10°C)</td>
-              </tr>
-              <tr>
-                <td>2022</td>
-                <td class="rain-cell">1500</td>
-                <td class="temp-cell">15</td>
-                <td class="rating-high">High</td>
-                <td>July (300mm)</td>
-                <td>September (28°C)</td>
-                <td>January (70mm)</td>
-                <td>February (4°C)</td>
-              </tr>
+            <tbody id="summaryTableBody">
               <tr>
                 <td>2023</td>
                 <td class="rain-cell">900</td>
@@ -204,22 +201,188 @@
               plants.forEach(plant => {
                       const imageUrl = plant.image_url || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWQwE9uVmHAYj0cF7B0tg9140LPsKCEh4GpA&s'; // Placeholder image
                       const plantCard = `
-     <div class="col-md-4">
-     <div class="card">
-     <img src="${imageUrl}" class="card-img-top" alt="${plant.common_name}" onerror="this.onerror=null; this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWQwE9uVmHAYj0cF7B0tg9140LPsKCEh4GpA&s'">
-     <div class="card-body">
-     <h5 class="card-title">${plant.common_name}</h5>
-     <p class="card-text"><strong>Scientific Name:</strong> ${plant.scientific_name}</p>
-     </div>
-     </div>
-     </div>
-     `;
+                        <div class="col-md-4">
+                        <div class="card">
+                        <img src="${imageUrl}" class="card-img-top" alt="${plant.common_name}" onerror="this.onerror=null; this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWQwE9uVmHAYj0cF7B0tg9140LPsKCEh4GpA&s'">
+                        <div class="card-body">
+                        <h5 class="card-title">${plant.common_name}</h5>
+                        <p class="card-text"><strong>Scientific Name:</strong> ${plant.scientific_name}</p>
+                        </div>
+                        </div>
+                        </div>
+                        `;
                       plantDataContainer.innerHTML += plantCard; // Append new card
                     });
             }
 
       // Call the function on page load
       fetchPlantData();
+      const climateData = {
+              '2023': { temperature: [21, 22, 23, 24, 25, 24, 23, 22, 21, 20, 21, 22], rainfall: [60, 55, 75, 90, 120, 80, 60, 45, 40, 30, 20, 10] },
+              '2022': { temperature: [20, 21, 22, 23, 24, 25, 25, 24, 23, 22, 21, 20], rainfall: [50, 60, 70, 85, 100, 75, 50, 40, 35, 20, 15, 5] },
+              '2021': { temperature: [19, 20, 21, 22, 23, 24, 24, 23, 22, 21, 20, 19], rainfall: [40, 50, 60, 70, 90, 80, 70, 50, 40, 25, 20, 10] },
+              '2020': { temperature: [18, 19, 20, 21, 22, 23, 23, 22, 21, 20, 19, 18], rainfall: [30, 40, 50, 60, 80, 75, 65, 45, 35, 20, 10, 5] },
+              '2019': { temperature: [17, 18, 19, 20, 21, 22, 22, 21, 20, 19, 18, 17], rainfall: [20, 30, 40, 50, 70, 60, 50, 35, 30, 15, 5, 0] }
+            };
+
+      let ctx = document.getElementById('climateChart').getContext('2d');
+      let climateChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                      datasets: []
+                    },
+              options: {
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      scales: {
+                              'y-axis-1': {
+                              type: 'linear',
+                              position: 'left',
+                              title: {
+                                      display: true,
+                                      text: 'Rainfall (mm)',
+                                      font: { weight: 'bold' },
+                                    }
+                                    },
+                              'y-axis-2': {
+                              type: 'linear',
+                              position: 'right',
+                              grid: { drawOnChartArea: false },
+                              title: {
+                                      display: true,
+                                      text: 'Temperature (°C)',
+                                      font: { weight: 'bold' },
+                                    }
+                                    },
+                              x: {
+                                      type: 'category',
+                                      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                                    }
+                            },
+                      plugins: {
+                              zoom: {
+                                      pan: {
+                                              enabled: true,
+                                              mode: 'xy'
+                                            },
+                                      zoom: {
+                                              wheel: { enabled: true },
+                                              pinch: { enabled: true },
+                                              drag: { enabled: false },
+                                              mode: 'xy'
+                                            }
+                                    }
+                            },
+                      tooltips: {
+                              mode: 'index',
+                              intersect: false
+                            },
+                      legend: {
+                              display: true,
+                              position: 'top'
+                            }
+                    }
+            });
+
+      // Function to toggle year data in the chart
+      function toggleYear(year) {
+              const datasetExists = climateChart.data.datasets.some(dataset => dataset.label.includes(year));
+
+              // Toggle button active state
+              const buttons = document.querySelectorAll('.year-toggle');
+              buttons.forEach(button => {
+                      if (button.getAttribute('data-year') === year) {
+                              button.classList.toggle('active');
+                            } else {
+                                    button.classList.remove('active');
+                                  }
+                    });
+
+              if (datasetExists) {
+                      // Remove the datasets for the selected year
+                      climateChart.data.datasets = climateChart.data.datasets.filter(dataset => !dataset.label.includes(year));
+                    } else {
+                            // Add the datasets for the selected year
+                            const data = climateData[year];
+
+                            // Create dataset for rainfall (bar chart)
+                            let rainDataset = {
+                                    label: `Rainfall ${year}`,
+                                    data: data.rainfall,
+                                    backgroundColor: getRandomColor(),
+                                    yAxisID: 'y-axis-1',
+                                    type: 'bar'
+                                  };
+
+                            // Create dataset for temperature (line chart)
+                            let tempDataset = {
+                                    label: `Temperature ${year}`,
+                                    data: data.temperature,
+                                    borderColor: getRandomColor(),
+                                    yAxisID: 'y-axis-2',
+                                    fill: false,
+                                    type: 'line',
+                                    tension: 0.5,
+                                  };
+
+                            climateChart.data.datasets.push(rainDataset, tempDataset);
+                          }
+
+              climateChart.update();
+              updateLegend();
+              updateSummaryTable();
+            }
+
+      // Function to update the legend dynamically
+      function updateLegend() {
+              const legendContainer = document.getElementById('legend');
+              legendContainer.innerHTML = '';
+
+              climateChart.data.datasets.forEach(dataset => {
+                      const legendItem = document.createElement('div');
+                      legendItem.className = 'legend-item';
+
+                      const colorBox = document.createElement('span');
+                      colorBox.className = 'legend-color';
+                      colorBox.style.backgroundColor = dataset.type === 'bar' ? dataset.backgroundColor : dataset.borderColor;
+
+                      const label = document.createElement('span');
+                      label.textContent = dataset.label;
+
+                      legendItem.appendChild(colorBox);
+                      legendItem.appendChild(label);
+                      legendContainer.appendChild(legendItem);
+                    });
+            }
+
+      // Function to update summary table
+      function updateSummaryTable() {
+              const summaryTableBody = document.getElementById('summaryTableBody');
+              summaryTableBody.innerHTML = '';
+
+              for (const year in climateData) {
+                      const data = climateData[year];
+                      const row = document.createElement('tr');
+
+                      row.innerHTML = `
+                        <td>${year}</td>
+                        <td>${average(data.temperature).toFixed(2)} °C</td>
+                        <td>${data.rainfall.reduce((a, b) => a + b, 0)} mm</td>
+                        `;
+                      summaryTableBody.appendChild(row);
+                    }
+            }
+
+      // Random color generator for datasets
+      function getRandomColor() {
+              const letters = '0123456789ABCDEF';
+              let color = '#';
+              for (let i = 0; i < 6; i++) {
+                      color += letters[Math.floor(Math.random() * 16)];
+                    }
+              return color;
+            }
     </script>
   </body>
 </html>
