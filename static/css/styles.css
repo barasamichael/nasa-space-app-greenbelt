@@ -1,0 +1,186 @@
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #f5f7fa;
+	color: #333;
+	line-height: 1.7;
+}
+.header {
+	background: linear-gradient(to bottom right, rgba(0, 64, 128, 0.9), rgba(0, 128, 64, 0.9)), url('path_to_hero_image.jpg');
+	background-size: cover;
+	color: white;
+	text-align: center;
+	padding: 100px 20px;
+}
+.header h1 {
+	font-size: 3.5rem;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
+.header p {
+	font-size: 1.25rem;
+	max-width: 700px;
+	margin: 0 auto;
+}
+.section {
+	padding: 60px 20px;
+}
+.section-heading {
+	font-size: 2rem;
+	font-weight: 600;
+	color: #004080;
+	margin-bottom: 40px;
+	text-align: center;
+}
+.content-text {
+	font-size: 1.15rem;
+	color: #555;
+	margin-bottom: 20px;
+}
+.story-image {
+	width: 100%;
+	height: auto;
+	border-radius: 15px;
+	margin-bottom: 30px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.comparison-section {
+	background-color: #e0f7fa;
+	padding: 60px 20px;
+}
+.comparison-section img {
+	width: 100%;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.quote {
+	font-size: 1.2rem;
+	font-style: italic;
+	color: #004080;
+	background-color: #f7f9fc;
+	padding: 20px;
+	border-left: 5px solid #008000;
+	margin-bottom: 40px;
+	max-width: 700px;
+	margin: 40px auto;
+}
+.btn-main {
+	background-color: #008000;
+	border-color: #008000;
+	color: white;
+	padding: 10px 20px;
+	font-size: 1.2rem;
+	transition: background-color 0.3s ease;
+}
+.btn-main:hover {
+	background-color: #005f00;
+	border-color: #005f00;
+}
+.call-to-action {
+	background-color: #004080;
+	color: white;
+	text-align: center;
+	padding: 60px 20px;
+}
+.call-to-action h2 {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
+
+.call-to-action p {
+	font-size: 1.25rem;
+	margin-bottom: 30px;
+}
+
+.footer {
+	background-color: #003366;
+	color: white;
+	text-align: center;
+	padding: 40px 0;
+}
+
+@media (max-width: 768px) {
+	.header h1 {
+		font-size: 2rem;
+	}
+	.header p {
+		font-size: 1rem;
+	}
+	.section-heading {
+		font-size: 1.75rem;
+	}
+}
+
+.card {
+	margin: 20px;
+	border: none;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+	max-width: 100%;
+	height: auto;
+}
+
+.card-title {
+	font-size: 1.5rem;
+	color: #2c3e50;
+}
+
+.card-text {
+	color: #7f8c8d;
+}
+
+.table-custom {
+	border-radius: 0.5rem;
+	overflow: hidden;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.table-custom th {
+	background-color: #28a745;
+	color: white;
+}
+.table-custom th, .table-custom td {
+	vertical-align: middle;
+	text-align: center;
+	padding: 1rem;
+}
+.rain-cell {
+	font-weight: bold;
+	color: #28a745;
+}
+.temp-cell {
+	font-weight: bold;
+	color: #17a2b8; /* Teal for temperature */
+}
+.rating-high {
+	color: #dc3545; /* Red for high */
+}
+.rating-low {
+	color: #28a745; /* Green for low */
+}
+.rating-moderate {
+	color: #ffc107; /* Yellow for moderate */
+}
+.custom-heading {
+	color: #00008B;
+}
+.iframe-container {
+	position: relative;
+	height: 100vh;
+	width: 100%;
+	overflow: hidden;
+	border: 2px solid #007BFF; /* Bootstrap primary color */
+	border-radius: 8px; /* Rounded corners */
+}
+.iframe-container iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: none;
+	border-radius: 8px; /* Match border radius */
+}

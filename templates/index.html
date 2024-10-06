@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Plant Information for Farmers</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .card {
+            margin: 20px;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+        .card-text {
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center mt-5">Plants Suitable for Farmers</h1>
+        <div class="row justify-content-center" id="plant-data">
+            <!-- Plant cards will be inserted here -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        async function fetchPlantData() {
+            try {
+                const response = await fetch("http://127.0.0.1:5000/api/plants?climate_zone=temperate&latitude=34.0522&longitude=-118.2437");
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayPlants(data.data);
+            } catch (error) {
+                console.error('Error fetching plant data:', error);
+            }
+        }
+
+        function displayPlants(plants) {
+            const plantDataContainer = document.getElementById('plant-data');
+            plantDataContainer.innerHTML = ''; // Clear existing data
+
+            plants.forEach(plant => {
+                const imageUrl = plant.image_url || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWQwE9uVmHAYj0cF7B0tg9140LPsKCEh4GpA&s'; // Placeholder image
+                const plantCard = `
+                    <div class="col-md-4">
+                        <div class="card">
+      <img src="${imageUrl}" class="card-img-top" alt="${plant.common_name}" onerror="this.onerror=null; this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWQwE9uVmHAYj0cF7B0tg9140LPsKCEh4GpA&s'">
+                            <div class="card-body">
+                                <h5 class="card-title">${plant.common_name}</h5>
+                                <p class="card-text"><strong>Scientific Name:</strong> ${plant.scientific_name}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                plantDataContainer.innerHTML += plantCard; // Append new card
+            });
+        }
+
+        // Call the function on page load
+        fetchPlantData();
+    </script>
+</body>
+</html>
+
