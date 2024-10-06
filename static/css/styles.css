@@ -5,11 +5,12 @@ body {
 	line-height: 1.7;
 }
 .header {
-	background: linear-gradient(to bottom right, rgba(0, 64, 128, 0.9), rgba(0, 128, 64, 0.9)), url('path_to_hero_image.jpg');
+	background: linear-gradient(to bottom right, rgba(0, 64, 128, 0.9), rgba(0, 128, 64, 0.9)), url('/static/img/illegal.avif');
 	background-size: cover;
 	color: white;
 	text-align: center;
 	padding: 100px 20px;
+	height: 100vh;
 }
 .header h1 {
 	font-size: 3.5rem;
@@ -258,3 +259,17 @@ body {
 		margin: 5px 0;
 	}
 }
+.chart-wrapper {
+	display: flex;              /* Use flexbox to align items */
+	align-items: flex-start;   /* Align items at the start */
+}
+
+.chart-container {
+	flex-grow: 1;              /* Allow chart container to grow and fill space */
+}
+
+.legend-container {
+	width: 200px;              /* Set a fixed width for the legend */
+	/* Add any additional styles for the legend as needed */
+}
+
